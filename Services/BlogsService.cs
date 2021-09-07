@@ -28,6 +28,16 @@ namespace bloggr.Services
       return blog;
     }
 
+    internal List<Blog> GetBlogsByCreator(string creatorId, bool careIfPublished = true)
+    {
+      List<Blog> blogs = _repo.GetAll(creatorId);
+      if (careIfPublished)
+      {
+        blogs = blogs.FindAll(b => b.Published == true);
+      }
+      return blogs;
+    }
+
     internal Blog Create(Blog newBlog)
     {
       return _repo.Create(newBlog);
@@ -48,6 +58,8 @@ namespace bloggr.Services
       original.Published = editedBlog.Published != null ? editedBlog.Published : original.Published;
       return _repo.Update(original);
     }
+
+
 
     internal Blog Delete(int blogId, string userId)
     {

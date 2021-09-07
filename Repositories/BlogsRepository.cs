@@ -49,6 +49,23 @@ namespace bloggr.Repositories
       }, new { id }, splitOn: "id").FirstOrDefault();
     }
 
+    internal List<Blog> GetAll(string creatorId)
+    {
+      string sql = @"
+      SELECT 
+        a.*,
+        b.*
+      FROM blogs b
+      JOIN accounts a ON a.id = b.creatorId
+      WHERE b.creatorId = @creatorId;
+      ";
+      return _db.Query<Profile, Blog, Blog>(sql, (prof, blog) =>
+      {
+        blog.Creator = prof;
+        return blog;
+      }, new { creatorId }, splitOn: "id").ToList<Blog>();
+    }
+
     internal Blog Create(Blog newBlog)
     {
       string sql = @"
