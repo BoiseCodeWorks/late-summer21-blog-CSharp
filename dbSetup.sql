@@ -17,3 +17,10 @@ CREATE TABLE blogs (
   creatorId VARCHAR(255) NOT NULL comment 'Creator Id References Account',
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 comment '';
+CREATE TABLE favorites (
+  id int NOT NULL primary key AUTO_INCREMENT comment 'primary key',
+  accountId VARCHAR(255) NOT NULL comment 'Account Id References Account',
+  blogId int NOT NULL comment 'blog Id References Blog',
+  FOREIGN KEY (accountId) REFERENCES accounts(id) ON DELETE CASCADE,
+  FOREIGN KEY (blogId) REFERENCES blogs(id) ON DELETE CASCADE
+) default charset utf8 comment '';

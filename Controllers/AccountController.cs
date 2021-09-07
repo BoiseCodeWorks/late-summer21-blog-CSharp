@@ -53,6 +53,22 @@ namespace bloggr.Controllers
         return BadRequest(e.Message);
       }
     }
+
+    [HttpGet("blogs/favorites")]
+    [Authorize]
+    public async Task<ActionResult<List<BlogFavoriteViewModel>>> GetFavoriteBlogs()
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        List<BlogFavoriteViewModel> blogs = _bs.GetFavoriteBlogsByAccount(userInfo.Id);
+        return Ok(blogs);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 
 

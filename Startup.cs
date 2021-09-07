@@ -40,6 +40,9 @@ namespace bloggr
       services.AddTransient<BlogsService>();
       services.AddTransient<BlogsRepository>();
 
+      services.AddTransient<FavoritesService>();
+      services.AddTransient<FavoritesRepository>();
+
     }
 
     private void ConfigureCors(IServiceCollection services)
@@ -48,14 +51,14 @@ namespace bloggr
       {
         options.AddPolicy("CorsDevPolicy", builder =>
               {
-            builder
-                  .AllowAnyMethod()
-                  .AllowAnyHeader()
-                  .AllowCredentials()
-                  .WithOrigins(new string[]{
+                builder
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials()
+                      .WithOrigins(new string[]{
                         "http://localhost:8080", "http://localhost:8081"
+                  });
               });
-          });
       });
     }
 

@@ -17,4 +17,10 @@ namespace bloggr.Models
     // acts as a virtual 
     public Profile Creator { get; set; }
   }
+
+  public class BlogFavoriteViewModel : Blog
+  {
+    public int FavoriteId { get; set; }
+  }
+
 }

@@ -94,6 +94,29 @@ namespace bloggr.Repositories
       return GetById(original.Id);
     }
 
+    internal List<BlogFavoriteViewModel> GetFavoriteBlogsByAccount(string id)
+    {
+      // MANY TO MANY GET
+      // FROM is always the many to many table
+      // WHERE column from the many to many table
+      // JOIN collection you want to retrieve ON col from m-2-m match to collection to retreive
+      string sql = @"
+      SELECT
+        a.*,
+        b.*,
+        f.id AS favoriteId
+      FROM favorites f
+      JOIN blogs b ON f.blogId = b.id
+      JOIN accounts a ON b.creatorId = a.id
+      WHERE f.accountId = @id
+      ";
+      return _db.Query<Profile, BlogFavoriteViewModel, BlogFavoriteViewModel>(sql, (prof, blog) =>
+      {
+        blog.Creator = prof;
+        return blog;
+      }, new { id }, splitOn: "id").ToList<BlogFavoriteViewModel>();
+    }
+
     internal void Delete(int id)
     {
       string sql = "DELETE FROM blogs WHERE id = @id LIMIT 1;";

@@ -59,7 +59,10 @@ namespace bloggr.Services
       return _repo.Update(original);
     }
 
-
+    internal List<BlogFavoriteViewModel> GetFavoriteBlogsByAccount(string id)
+    {
+      return _repo.GetFavoriteBlogsByAccount(id);
+    }
 
     internal Blog Delete(int blogId, string userId)
     {
